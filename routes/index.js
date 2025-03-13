@@ -9,6 +9,8 @@ router.get('/', (req, res) => {
 });
 
 router.get("/test", async (req, res) => {
+  const { url } = req.query;
+  if (!url) return res.json({ error: "gtw dh" });
   const browser = await puppeteer.launch({
     headless: "new",
     args: [
@@ -19,12 +21,11 @@ router.get("/test", async (req, res) => {
     ]
   });
   const page = await browser.newPage();
-  await page.goto("https://ahmdev.web.id");
-  const result = await page.title();
+  await page.goto(url);
+  const result = await page.screenshot({ fullPage: true });
   await browser.close();
-  res.json({
-    result
-  });
+  res.set("Content-Type", "image/png");
+  res.send(result);
 });
 
 module.exports = router;
