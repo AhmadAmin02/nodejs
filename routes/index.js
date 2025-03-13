@@ -1,5 +1,5 @@
 const express = require('express');
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer");
 const path = require('path');
 const router = express.Router();
 
