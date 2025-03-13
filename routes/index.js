@@ -9,9 +9,21 @@ router.get('/', (req, res) => {
 });
 
 router.get("/test", async (req, res) => {
-  //const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({
+    headless: "new",
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu"
+    ]
+  });
+  const page = await browser.newPage();
+  await page.goto("https://ahmdev.web.id");
+  const result = await page.title();
+  await browser.close();
   res.json({
-    result: "hanya test"
+    result
   });
 });
 
