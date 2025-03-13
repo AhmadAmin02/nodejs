@@ -1,5 +1,6 @@
 const express = require('express');
 const puppeteer = require("puppeteer");
+const { PassThrough } = require("stream");
 const path = require('path');
 const router = express.Router();
 
@@ -24,8 +25,10 @@ router.get("/screenshot", async (req, res) => {
   await page.goto(url, { waitUntil: "load", timeout: 0 });
   const result = await page.screenshot({ fullPage: true, type: "jpeg" });
   await browser.close();
-  res.set("Content-Type", "image/jpeg");
-  res.send(result);
+  const stream = new PassThrough();
+  stream.end(result);
+  res.setHeader("Content-Type", "image/jpeg");
+  stream.pipe(res);
 });
 
 module.exports = router;
