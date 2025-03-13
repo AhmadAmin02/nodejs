@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 
-router.get("/test", async (req, res) => {
+router.get("/screenshot", async (req, res) => {
   const { url } = req.query;
   if (!url) return res.json({ error: "gtw dh" });
   const browser = await puppeteer.launch({
@@ -22,7 +22,7 @@ router.get("/test", async (req, res) => {
   });
   const page = await browser.newPage();
   await page.goto(url);
-  const result = await page.screenshot({ fullPage: true });
+  const result = await page.screenshot({ fullPage: true, type: "png" });
   await browser.close();
   res.set("Content-Type", "image/png");
   res.send(result);
