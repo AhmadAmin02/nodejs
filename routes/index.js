@@ -21,10 +21,10 @@ router.get("/screenshot", async (req, res) => {
     ]
   });
   const page = await browser.newPage();
-  await page.goto(url);
-  const result = await page.screenshot({ fullPage: true, type: "png" });
+  await page.goto(url, { waitUntil: "load", timeout: 0 });
+  const result = await page.screenshot({ fullPage: true, type: "jpeg" });
   await browser.close();
-  res.set("Content-Type", "image/png");
+  res.set("Content-Type", "image/jpeg");
   res.send(result);
 });
 
