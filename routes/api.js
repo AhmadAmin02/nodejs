@@ -24,156 +24,147 @@ router.get("/islamic/jadwalsholat", ca, async (req, res) => {
     }
 });
 
-/*router.get("/islamic/surah", ca, async (req, res) => {
-    const result = await islamic.getAllSurah();
-    res.status(200).json({
-        status: 200,
-        author,
-        result
-    });
+router.get("/islamic/surah", ca, async (req, res) => {
+    try {
+        const result = await islamic.getAllSurah();
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
+    }
 });
 
-//  AI
+// AI
 
 router.get("/ai/muslim", ca, async (req, res) => {
-    const teks = req.query.teks;
-    if (!teks) return res.status(404).json(notParam(["teks"]));
-    const result = await ai.muslimAI(teks);
-    if (result) {
-        res.status(200).json({
-            status: 200,
-            result: result
-        });
-    } else {
-        res.status(500).json({
-            status: 500,
-            result: "Error!"
-        });
+    try {
+        const teks = req.query.teks;
+        if (!teks) return resp(res, "teks");
+        const result = await ai.muslimAI(teks);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
     }
 });
 
 router.get("/ai/ahmdai", ca, async (req, res) => {
-    const text = req.query.text;
-    const model = req.query.model;
-    const id = req.query.id;
-    if (!text || !model || !id) return res.status(404).json(notParam(["text", "model", "id"]));
-    const result = await ai.getMessage(text, model, id);
-    if (result) {
-        res.status(200).json({
-            status: 200,
-            author,
+    try {
+        const text = req.query.text;
+        const model = req.query.model;
+        const id = req.query.id;
+        if (!text) return resp(res, "text");
+        if (!model) return resp(res, "model");
+        if (!id) return resp(res, "id");
+        const result = await ai.getMessage(text, model, id);
+        res.json(m.res({
             isNewSession: result.isNew,
-            result: result.message
-        });
+            message: result.message
+        }));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
     }
 });
 
-//  STALK
+// STALK
 
 router.get("/stalk/tiktok", ca, async (req, res) => {
-    const username = req.query.username;
-    if (!username) return res.status(404).json(notParam(["username"]));
-    const result = await stalk.tiktokStalk(username);
-    if (result) {
-        res.status(200).json({
-            status: 200,
-            author: author,
-            result: result
-        });
-    } else {
-        res.status(500).json({
-            status: 500,
-            author: author,
-            result: "Error!, Username not found!"
-        });
+    try {
+        const username = req.query.username;
+        if (!username) return resp(res, "username");
+        const result = await stalk.tiktokStalk(username);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
     }
 });
 
 router.get("/stalk/freefire", ca, async (req, res) => {
-    const id = req.query.id;
-    if (!id) return res.status(404).json(notParam(["id"]));
-    const result = await stalk.ffStalk(id);
-    if (!result) {
-        res.status(500).json({
-            status: 500,
-            author,
-            result: "Error!, Id tida ditemukan!"
-        });
-    } else {
-    res.status(200).json({
-        status: 200,
-        author,
-        result
-    });
+    try {
+        const id = req.query.id;
+        if (!id) return resp(res, "id");
+        const result = await stalk.ffStalk(id);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
     }
 });
 
 router.get("/stalk/github", ca, async (req, res) => {
-    const username = req.query.username;
-    if (!username) return res.status(404).json(notParam(["username"]));
-    const result = await stalk.githubStalk(username);
-    res.status(200).json({
-        status: 200,
-        author,
-        result
-    });
+    try {
+        const username = req.query.username;
+        if (!username) return resp(res, "username");
+        const result = await stalk.githubStalk(username);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
+    }
 });
 
 router.get("/stalk/instagram", ca, async (req, res) => {
-    const username = req.query.username;
-    if (!username) return res.status(404).json(notParam(["username"]));
-    const result = await stalk.igStalk(username);
-    res.status(200).json({
-        status: 200,
-        author,
-        result
-    });
+    try {
+        const username = req.query.username;
+        if (!username) return resp(res, "username");
+        const result = await stalk.igStalk(username);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
+    }
 });
 
-//  DOWNLOADER
+// DOWNLOADER
 
 router.get("/download/ytmp4", ca, async (req, res) => {
-    const link = req.query.link;
-    if (!link) return res.status(404).json(notParam(["link"]));
-    const result = await download.ytdown("mp4", link);
-    res.status(200).json({
-        status: 200,
-        author,
-        result
-    });
+    try {
+        const link = req.query.link;
+        if (!link) return resp(res, "link");
+        const result = await download.ytdown("mp4", link);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
+    }
 });
 
 router.get("/download/videy", ca, async (req, res) => {
-    const link = req.query.link;
-    if (!link) return res.status(404).json(notParam(["link"]));
-    const result = download.videyDown(link);
-    res.status(200).json({
-        status: 200,
-        author,
-        result
-    });
+    try {
+        const link = req.query.link;
+        if (!link) return resp(res, "link");
+        const result = await download.videyDown(link);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
+    }
 });
 
 router.get("/download/mediafire", ca, async (req, res) => {
-    const link = req.query.link;
-    if (!link) return res.status(404).json(notParam(["link"]));
-    const result = await download.mediaFireDown(link);
-    res.json({
-        status: 200,
-        author,
-        result
-    });
+    try {
+        const link = req.query.link;
+        if (!link) return resp(res, "link");
+        const result = await download.mediaFireDown(link);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
+    }
 });
 
 router.get("/download/tiktok", ca, async (req, res) => {
-    const link = req.query.link;
-    if (!link) return res.status(404).json(notParam(["link"]));
-    const result = await download.tiktokDown(link);
-    res.json({
-        status: 200,
-        author,
-        result
-    });
-});*/
+    try {
+        const link = req.query.link;
+        if (!link) return resp(res, "link");
+        const result = await download.tiktokDown(link);
+        res.json(m.res(result));
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(m.err);
+    }
+});
 
 module.exports = router;
