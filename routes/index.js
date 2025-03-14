@@ -46,10 +46,11 @@ router.get("/nulis", async (req, res) => {
   const base64 = data.replace(/^data:image\/png;base,/, "");
   const buffer = Buffer.from(base64, "base64");
   await browser.close();
-  const stream = new PassThrough();
-  stream.end(buffer);
+  //const stream = new PassThrough();
+  //stream.end(buffer);
   res.setHeader("Content-Type", "image/png");
-  stream.pipe(res);
+  //stream.pipe(res);
+  res.send(buffer);
 });
 
 module.exports = router;
