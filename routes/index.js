@@ -48,12 +48,9 @@ router.get("/nulis", async (req, res) => {
   await browser.close();
   //const stream = new PassThrough();
   //stream.end(buffer);
-  //res.set("Content-Type", "image/png");
+  res.set("Content-Type", "image/png");
   //stream.pipe(res);
-  //res.send(buffer);
-  res.json({
-    result: base64
-  });
+  res.send(buffer);
 });
 
 module.exports = router;
