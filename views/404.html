@@ -1,18 +1,368 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="description" content="Page not found">
-    <meta name="author" content="alphasec">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>404 Not Found</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/styles.css">
-  </head>
-  <body>
-    <div class="row">
-      <h1 class="h1">404 Not Found</h1>
-      <a href="/" class="btn btn-primary">Go Home</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #4a6cf7;
+            --text-color: #333;
+            --bg-color: #f8f9ff;
+            --title-color: #2d3748;
+            --desc-color: #718096;
+            --shadow-color: rgba(74, 108, 247, 0.4);
+            --star-color: #4a6cf7;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #4a6cf7;
+            --text-color: #e2e8f0;
+            --bg-color: #111827;
+            --title-color: #f1f5f9;
+            --desc-color: #cbd5e1;
+            --shadow-color: rgba(74, 108, 247, 0.6);
+            --star-color: #a5b4fc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 1.5rem;
+            max-width: 800px;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .error-code {
+            font-size: 110px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px var(--shadow-color);
+            position: relative;
+            display: inline-block;
+            line-height: 1.1;
+            width: 100%;
+            transition: color 0.3s ease;
+        }
+        
+        .error-digit {
+            display: inline-block;
+            animation: jello-horizontal 2.5s infinite;
+        }
+        
+        .error-digit:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .error-digit:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes jello-horizontal {
+            0% {
+                transform: scale3d(1, 1, 1);
+            }
+            30% {
+                transform: scale3d(1.25, 0.75, 1);
+            }
+            40% {
+                transform: scale3d(0.75, 1.25, 1);
+            }
+            50% {
+                transform: scale3d(1.15, 0.85, 1);
+            }
+            65% {
+                transform: scale3d(0.95, 1.05, 1);
+            }
+            75% {
+                transform: scale3d(1.05, 0.95, 1);
+            }
+            100% {
+                transform: scale3d(1, 1, 1);
+            }
+        }
+        
+        .error-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin: 10px 0 15px;
+            color: var(--title-color);
+            transition: color 0.3s ease;
+        }
+        
+        .error-text {
+            font-size: 15px;
+            color: var(--desc-color);
+            margin-bottom: 25px;
+            line-height: 1.5;
+            transition: color 0.3s ease;
+        }
+        
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+        
+        .home-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+        
+        .home-button i {
+            margin-right: 8px;
+        }
+        
+        .icon-404 {
+            font-size: 70px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            opacity: 0.8;
+            transition: color 0.3s ease;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: var(--star-color);
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+            transition: background-color 0.3s ease;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.2; }
+        }
+        
+        .error-code::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+        
+        /* Responsive styles */
+        @media (min-width: 769px) {
+            .error-code {
+                font-size: 120px;
+            }
+            
+            .icon-404 {
+                font-size: 80px;
+            }
+            
+            .error-title {
+                font-size: 28px;
+            }
+            
+            .error-text {
+                font-size: 16px;
+            }
+            
+            .container {
+                padding: 2rem;
+            }
+            
+            .error-code::after {
+                width: 150px;
+                height: 5px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 80px;
+                margin-bottom: 10px;
+            }
+            
+            .icon-404 {
+                font-size: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .error-title {
+                font-size: 22px;
+                margin: 8px 0 12px;
+            }
+            
+            .error-text {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .error-code::after {
+                width: 100px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .error-code {
+                font-size: 70px;
+            }
+            
+            .home-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .icon-404 {
+                font-size: 45px;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="icon-404">
+            <i class="fas fa-search"></i>
+        </div>
+        
+        <div class="error-code">
+            <span class="error-digit">4</span>
+            <span class="error-digit">0</span>
+            <span class="error-digit">4</span>
+        </div>
+        
+        <h2 class="error-title">Oops! Page Not Found</h2>
+        <p class="error-text">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        
+        <a href="/" class="home-button">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
     </div>
-  </body>
+
+    <script>
+        // Check theme from localStorage
+        function applyTheme() {
+            // Try to get theme from localStorage
+            const storedTheme = localStorage.getItem('theme');
+            
+            // Check if dark theme is set in localStorage or if user prefers dark mode
+            const isDarkMode = storedTheme === 'dark' || 
+                (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            
+            // Apply theme to document
+            if (isDarkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+            
+            // Update stars when theme changes
+            updateStars();
+        }
+        
+        // Apply theme immediately
+        applyTheme();
+        
+        // Create stars
+        function updateStars() {
+            const starsContainer = document.getElementById('stars');
+            starsContainer.innerHTML = ''; // Clear existing stars
+            
+            const starsCount = 80;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                const x = Math.floor(Math.random() * window.innerWidth);
+                const y = Math.floor(Math.random() * window.innerHeight);
+                
+                // Random size
+                const size = Math.random() * 3;
+                
+                // Random animation delay
+                const delay = Math.random() * 2;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}px`;
+                star.style.top = `${y}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Listen for localStorage changes
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'theme') {
+                applyTheme();
+            }
+        });
+        
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+        
+        // Handle viewport issues
+        function adjustViewport() {
+            // For mobile browsers, ensure content fits without scrolling
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        // Call on page load and resize
+        window.addEventListener('load', adjustViewport);
+        window.addEventListener('resize', adjustViewport);
+    </script>
+</body>
 </html>

@@ -168,7 +168,7 @@ class TypeWriter {
 }
 
 // Ambil data dari quote.json
-fetch('motivasi.json')
+fetch('/database/motivasi.json')
   .then(response => response.json())
   .then(data => {
     const textElement = document.getElementById('katakata');
