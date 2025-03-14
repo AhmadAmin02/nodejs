@@ -1,29 +1,30 @@
 const express = require('express');
 const path = require('path');
-const { rateLimit } = require("express-rate-limit");
+const cors = require("cors");
+
 const indexRouter = require('./routes/index');
+const apiRouter = require("./routes/api");
 
 const app = express();
 const PORT = 3000;
 
-const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000,
-  limit: 10,
-  message: { error: "Hanya bisa 1 menit per 10 requests!" }
-});
+app.enable("trust proxy")
 
-// Serve static files from the "public" directory
+app.set("json spaces", 2);
+
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/screenshot", limiter);
-
-// Use the router for handling routes
 app.use('/', indexRouter);
+app.use("/api", apiRouter);
 
-// Catch-all route for handling 404 errors
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-  });
+  res.status(404).sendFile(path.join(__dirname, 'error', '404.html'));
+});
+
+app.use((req, res, next) => {
+  res.status(500).sendFile(path.join(__dirname, "error", "500.html"));
+})
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);

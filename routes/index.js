@@ -1,6 +1,4 @@
 const express = require('express');
-const puppeteer = require("puppeteer");
-const { PassThrough } = require("stream");
 const path = require('path');
 const router = express.Router();
 
@@ -9,7 +7,7 @@ router.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 
-router.get("/nulis", async (req, res) => {
+/*router.get("/nulis", async (req, res) => {
   const { date, name, teks } = req.query;
   if (!date || !name || !teks) return res.json({ error: "gtw dh" });
   const browser = await puppeteer.launch({
@@ -51,6 +49,6 @@ router.get("/nulis", async (req, res) => {
   res.set("Content-Type", "image/png");
   //stream.pipe(res);
   res.send(buffer);
-});
+});*/
 
 module.exports = router;
