@@ -15,7 +15,7 @@ const download = require("../scrape/download");
 router.get("/islamic/jadwalsholat", ca, async (req, res) => {
     try {
         const wilayah = req.query.wilayah || req.query.kota;
-        if (!wilayah && isEmpty(wilayah)) return resp(res, "wilayah");
+        if (!wilayah) return resp(res, "wilayah");
         const result = await islamic.JadwalSholat.byCity(wilayah);
         res.json(m.res(result));
     } catch (e) {
