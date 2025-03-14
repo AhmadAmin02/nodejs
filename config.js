@@ -11,6 +11,11 @@ const m = {
         author,
         result: "Mohon Maaf, Telah terjadi error pada server. silahkan laporkan error ke owner!"
     },
+    limit: {
+        status: 429,
+        author,
+        result: "Terlalu banyak permintaan. kamu sudah mencapai 10 limit. silahkan coba lagi dalam 1 menit"
+    },
     notKey: (key) => ({
         status: 401,
         author,
