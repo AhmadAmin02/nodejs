@@ -24,18 +24,21 @@ router.get("/nulis", async (req, res) => {
   const page = await browser.newPage();
   await page.goto("https://tulisno.vercel.app/", { waitUntil: "load", timeout: 0 });
   //const result = await page.screenshot({ fullPage: true, type: "jpeg" });
-  await page.$eval("input#date", (el) => {
-    el.value = date;
+  await page.evaluate((dates) => {
+    var el = document.querySelector("input#date");
+    el.value = dates;
     el.dispatchEvent(new Event("input", { bubbles: true }));
-  });
-  await page.$eval("input#name", (el) => {
-    el.value = name;
+  }, date);
+  await page.evaluate((names) => {
+    var el = document.querySelector("input#name");
+    el.value = names;
     el.dispatchEvent(new Event("input", { bubbles: true }));
-  });
-  await page.$eval("textarea#content", (el) => {
-    el.value = teks;
+  }, name);
+  await page.evaluate((texts) => {
+    var el = document.querySelector("textarea#content");
+    el.value = texts;
     el.dispatchEvent(new Event("input", { bubbles: true }));
-  });
+  }, teks);
   const data = await page.evaluate(() => {
     const canva = document.querySelector("canvas#defaultCanvas0");
     return canva ? canva.toDataUrl("image/png") : null;
