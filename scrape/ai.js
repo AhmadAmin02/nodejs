@@ -214,7 +214,7 @@ async function muslimAI(query = "Halo") {
 }
 
 const BASE = "https://mind.hydrooo.web.id/";
-const models = JSON.parse(fs.readFileSync(path.join(__dirname, "model.json")));
+const models = JSON.parse(fs.readFileSync(path.join(__dirname, "../db", "model.json")));
 const sesPath = (id) => {
   return id ? path.join("/tmp", `${id}.json`) : "/tmp";
 }

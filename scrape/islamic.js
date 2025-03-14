@@ -6,6 +6,7 @@
 const axios = require('axios');
 const cheerio = require("cheerio");
 const fs = require("fs");
+const path = require('path');
 
 // URL dasar API
 const BASE_URL = 'https://api.myquran.com/v2';
@@ -108,7 +109,7 @@ async function getAllCities() {
   }
 }
 
-const list = JSON.parse(fs.readFileSync(__dirname + "/kota.json"));
+const list = JSON.parse(fs.readFileSync(path.join(__dirname, "../db", "kota.json")));
 const JadwalSholat = {
   LIST: list,
   searchByName(query) {
