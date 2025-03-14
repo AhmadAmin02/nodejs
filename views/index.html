@@ -1,26 +1,422 @@
-<!doctype html>
-<html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <meta name="description" content="alphasec">
-      <meta name="author" content="alphasec">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>alphasec</title>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-      <link rel="stylesheet" href="/css/styles.css">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:500&display=swap">
-      <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  </head>
-  <body>
-    <div class="row">
-      <h1 class="h1">alphasec</h1>
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AhmdAPI</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" type="text/css" media="all" />
+</head>
+
+<body>
+  <!-- Sidebar Navigation -->
+  <nav class="sidenav">
+    <div class="sidenav-header">
+      <a class="sidenav-brand">Ahmd<span class="primary">API</span></a>
+      <button class="sidenav-toggle">
+        <i class="fas fa-chevron-left"></i>
+      </button>
     </div>
-    <div class="row">
-      <div>
+    <div class="sidenav-menu">
+      <a class="sidenav-item" data-section="dashboard">
+        <i class="fas fa-home"></i>
+        <span>Dashboard</span>
+      </a>
+      <a class="sidenav-item" data-section="ai">
+        <i class="fas fa-robot"></i>
+        <span>AI</span>
+      </a>
+      <a class="sidenav-item" data-section="islamic">
+        <i class="fas fa-star-and-crescent"></i>
+        <span>Islamic</span>
+      </a>
+      <a class="sidenav-item" data-section="stalker">
+        <i class="fas fa-user-secret"></i>
+        <span>Stalker</span>
+      </a>
+      <a class="sidenav-item" data-section="downloader">
+        <i class="fas fa-download"></i>
+        <span>Downloader</span>
+      </a>
+      <a class="sidenav-item" data-section="game">
+        <i class="fas fa-gamepad"></i>
+        <span>Game</span>
+      </a>
+    </div>
+  </nav>
+  
+  <!-- Top Navigation Bar -->
+  <header class="topbar">
+    <div class="left-section">
+      <button class="menu-toggle">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <h1 class="page-title">Dashboard</h1>
+    </div>
+    <div class="profile-container">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBCE5gNgFYRum_pTQmoY5r3lEdoIYntgZjRzi3J7Rn7g&s" alt="Profile" class="profile-image">
+      <div class="profile-dropdown">
+        <div class="profile-header">
+          <div class="profile-name">AhmaDev</div>
+          <div class="profile-email">ahmad@dev.com</div>
+        </div>
+        <div class="profile-menu">
+          <a href="#" class="profile-item">
+            <i class="fas fa-user"></i>
+            <span>Profile Saya</span>
+          </a>
+          <div class="profile-item toggle-container">
+            <div style="display: flex; align-items: center; width: 120px;">
+              <div style="position: relative; width: 24px; height: 24px; margin-right: 8px;">
+                <i class="fas fa-moon moon-icon" style="font-size: 16px;"></i>
+                <i class="fas fa-sun sun-icon" style="font-size: 16px;"></i>
+              </div>
+              <span>Dark Mode</span>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="theme-toggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <a href="#" class="profile-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>LogOut</span>
+          </a>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <span class="text-muted small">alphasec © 2024. All rights reserved.</span>
+  </header>
+  
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- Dashboard Section -->
+    <div id="dashboard-section" class="content-section active">
+      <div class="grid">
+        <div class="card">
+          <div class="card-title">
+            <i class="fas fa-check-circle" style="color: var(--success-color);"></i>
+            API Status
+          </div>
+          <p>Semua sistem berjalan normal</p>
+          <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+            <span class="badge" style="background-color: var(--success-color);">Online</span>
+            <span style="font-size: 14px;">Uptime: 99.98%</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <i class="fas fa-face-smile"></i>
+            Kata-Kata Motivasi
+          </div>
+          <span id="katakata">Tidak Ada Kata-Kata</span>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            <i class="fas fa-clock"></i>
+            Waktu
+          </div>
+          <div class="big-time" id="current-time">00:00:00</div>
+          <p style="text-align: center;">WITA/WIB/WIT</p>
+        </div>
+        <div class="card">
+          <div class="card-title">API Keys Gratis</div>
+          <p>Chat WA Gw Nanti Gw Kasih ApiKey Gratis.</p>
+          <a href="https://wa.me/6289529068349?text=Bagi+ApiKey+Gratis+Bang" class="btn" style="margin-top: 10px;">
+            <i class="fas fa-message"></i>
+            <span>Chat WA</span>
+          </a>
+        </div>
+        <div class="card">
+          <div class="card-title">Thanks To</div>
+          <p>- Allah SWT</p>
+          <p>- Orang Tua Saya</p>
+          <p>- Myself</p>
+          <p>- Too You All</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Apa itu REST API?</div>
+          REST API (Representational State Transfer Application Programming Interface) adalah arsitektur komunikasi berbasis HTTP yang memungkinkan aplikasi atau sistem untuk saling berkomunikasi melalui internet dengan prinsip REST. REST adalah gaya arsitektur yang menggunakan metode standar HTTP seperti GET, POST, PUT, PATCH, dan DELETE untuk melakukan operasi terhadap sumber daya (resources).
+          <br><br>
+          Client dan server dipisahkan sehingga client hanya meminta data, sedangkan server menyediakan data tersebut tanpa ketergantungan satu sama lain. REST API bersifat stateless, yang berarti setiap permintaan dari client harus mengandung semua informasi yang diperlukan karena server tidak menyimpan sesi atau state dari permintaan sebelumnya.
+          <br><br>
+          Data dalam REST API biasanya dikirim dalam format JSON atau XML, dengan JSON yang lebih umum digunakan karena lebih ringan dan mudah dibaca oleh manusia maupun mesin. REST API juga mendukung caching untuk meningkatkan performa dengan menyimpan respons agar tidak perlu memproses ulang permintaan yang sama.
+          <br><br>
+          REST API banyak digunakan untuk membangun sistem berbasis web, termasuk layanan backend untuk aplikasi mobile dan web, karena fleksibel, mudah diimplementasikan, dan dapat digunakan oleh berbagai platform dengan protokol HTTP standar.
+        </div>
+      </div>
     </div>
-  </body>
+    
+    <div id="ai-section" class="content-section">
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-robot"></i>
+          AI API Endpoints
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama API</th>
+                <th>Deskripsi</th>
+                <th>Parameter</th>
+                <th>METHOD</th>
+                <th>Status</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MuslimAI</td>
+                <td>Bertanya kepada AI tentang agama Islam</td>
+                <td>apikey, teks</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/ai/muslim?apikey=YOUR_KEYS&teks=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <div id="islamic-section" class="content-section">
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-star-and-crescent"></i>
+          Islamic API Endpoints
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama API</th>
+                <th>Deskripsi</th>
+                <th>Parameter</th>
+                <th>METHOD</th>
+                <th>Status</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jadwal Sholat</td>
+                <td>Mendapatkan informasi detail Waktu Sholat</td>
+                <td>apikey, wilayah</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/islamic/jadwalsholat?apikey=YOUR_KEYS&wilayah=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>Surah</td>
+                <td>Mengambil semua informasi Surah di Al-Qur'an</td>
+                <td>apikey</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/islamic/surah" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stalker API Section -->
+    <div id="stalker-section" class="content-section">
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-user-secret"></i>
+          Stalker API Endpoints
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama API</th>
+                <th>Deskripsi</th>
+                <th>Parameter</th>
+                <th>METHOD</th>
+                <th>Status</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TikTok Stalker</td>
+                <td>Mendapatkan informasi detail profil TikTok dengan cepat</td>
+                <td>apikey, username</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/stalk/tiktok?apikey=YOUR_KEYS&username=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>GitHub Stalker</td>
+                <td>Mengambil informasi profil GitHub</td>
+                <td>apikey, username</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/stalk/github?apikey=YOUR_KEYS&username=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>FreeFire Stalker</td>
+                <td>Mengambil informasi profil FreeFire</td>
+                <td>apikey, username</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/stalk/freefire?apikey=YOUR_KEYS&username=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>Instagram Stalker</td>
+                <td>Mengambil informasi profil Instagram tanpa menggunakan akun</td>
+                <td>apikey, username</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/stalk/instagram?apikey=YOUR_KEYS&username=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Downloader API Section -->
+    <div id="downloader-section" class="content-section">
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-download"></i>
+          Downloader API Endpoints
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama API</th>
+                <th>Deskripsi</th>
+                <th>Parameter</th>
+                <th>METHOD</th>
+                <th>Status</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>YouTube Audio (ytmp3)</td>
+                <td>Download audio dari YouTube dalam berbagai kualitas</td>
+                <td>apikey, link</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/download/ytmp3?apikey=YOUR_KEYS&link=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>YouTube Video (ytmp4)</td>
+                <td>Download video dari YouTube dengan kualitas tinggi</td>
+                <td>apikey, link</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/download/ytmp4?apikey=YOUR_KEYS&link=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>Instagram Downloader</td>
+                <td>Download foto dan video dari Reels Instagram</td>
+                <td>apikey, link</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/download/ig?apikey=YOUR_KEYS&link=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>Videy Downloader</td>
+                <td>Download video dari Videy</td>
+                <td>apikey, link</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/download/videy?apikey=YOUR_KEYS&link=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>MediaFire Downloader</td>
+                <td>Download file dengan cepat menggunakan MediaFire</td>
+                <td>apikey, link</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/download/mediafire?apikey=YOUR_KEYS&link=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>TikTok Downloader</td>
+                <td>Download video atau foto dari TikTok tanpa watermark</td>
+                <td>apikey, link</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"></i></span></td>
+                <td><a href="api/download/tiktok?apikey=YOUR_KEYS&link=" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Game API Section -->
+    <div id="game-section" class="content-section">
+      <div class="card">
+        <div class="card-title">
+          <i class="fas fa-gamepad"></i>
+          Game API Endpoints
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama API</th>
+                <th>Deskripsi</th>
+                <th>Parameter</th>
+                <th>METHOD</th>
+                <th>Status</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Tebak Gambar</td>
+                <td>Game Tebak Gambar secara acak dengan jawaban nya</td>
+                <td>apikey</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/game/tebakgambar?apikey=YOUR_KEYS" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>Tebak Bendera</td>
+                <td>Game Tebak Bendera dengan jawaban emoji</td>
+                <td>apikey</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/game/tebakbendera?apikey=YOUR_KEYS" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>Tebak Bendera 2</td>
+                <td>Game Tebak Bendera dengan jawaban gambar bendera</td>
+                <td>apikey</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/game/tebakbendera2?apikey=YOUR_KEYS" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+              <tr>
+                <td>Tebak Kalimat</td>
+                <td>Game Tebak Kalimat dengan 101 soal</td>
+                <td>apikey</td>
+                <td><span class="status-badge method">GET</span></td>
+                <td><span class="status-badge status-true"><i class="fas fa-check"><i></span></td>
+                <td><a href="api/game/tebakkalimat?apikey=YOUR_KEYS" class="btn-arrow"><i class="fas fa-arrow-right"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="footer">
+    <span>© 2025 <strong>AhmDev</strong> | All Rights Reserved.</span>
+  </div>
+  <audio src="lagu1.mp3" id="audio" loop></audio>
+  <script src="script.js"></script>
+</body>
+
 </html>
