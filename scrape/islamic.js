@@ -110,10 +110,10 @@ async function getAllCities() {
 }
 
 const list = JSON.parse(fs.readFileSync(path.join(__dirname, "../db", "kota.json")));
-console.log(list.length);
 const JadwalSholat = {
   LIST: list,
   searchByName(query) {
+    console.log("Jumlah:", list.length);
     const result = JadwalSholat.LIST.find(
       (item) => item.name.toLowerCase().includes(query.toLowerCase())
     );
