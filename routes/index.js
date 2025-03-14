@@ -32,7 +32,7 @@ router.get("/nulis", async (req, res) => {
     el.value = name;
     el.dispatchEvent(new Event("input", { bubbles: true }));
   });
-  await page.$eval("input#content", (el) => {
+  await page.$eval("textarea#content", (el) => {
     el.value = teks;
     el.dispatchEvent(new Event("input", { bubbles: true }));
   });
