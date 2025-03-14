@@ -43,7 +43,7 @@ router.get("/nulis", async (req, res) => {
     const canva = document.querySelector("canvas#defaultCanvas0");
     return canva ? canva.toDataURL("image/png") : null;
   });
-  const base64 = data.replace(/^data:image\/png;base,/, "");
+  const base64 = data.split(",")[1];
   const buffer = Buffer.from(base64, "base64");
   await browser.close();
   //const stream = new PassThrough();
