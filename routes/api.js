@@ -2,13 +2,41 @@ const express = require("express");
 const router = express.Router();
 
 const fs = require("fs");
-const { isApiKey, ca, resp, isEmpty } = require("../lib/function");
-const m = require("../config");
+const { isApiKey, ca, resp, addApiKey, key } = require("../lib/function");
+const { m, rank, password } = require("../config");
 
 const ai = require("../scrape/ai");
 const islamic = require("../scrape/islamic");
 const stalk = require("../scrape/stalk");
 const download = require("../scrape/download");
+
+//  APIKEY
+
+router.get("/apikey/cek", ca, (req, res) => {
+    const keys = req.query.apikey;
+    const data = key.find(x => x.apikey === keys);
+    if (!data || data === undefined) return res.status(m.notKey(keys).status).json(m.notKey(keys));
+    var date = new Date(data.expired);
+    var exp = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    const result = {
+        apikey: keys,
+        pemilik: data.author,
+        rank: data.rank,
+        limit: data.limit === false ? "∞" : data.limit,
+        expiredAt: exp
+    }
+    res.json(m.res(result));
+});
+
+router.get("/apikey/add", (req, res) => {
+    const { passwords, apikey, author, expired, ranks } = req.query;
+    if (!passwords || passwords !== password) return res.status(400).json({ error: "Password salah! Bukan owner AhmDev ngapain kesini?" });
+    if (!apikey || !author || !expired || !ranks) return res.status(400).json({ error: "Parameter Apikey, Author, Expired, Ranks Harus diisi!" });
+    if (!rank.hasOwnProperty(ranks)) return res.status(400).json({ error: `Rank ${ranks} tidak ditemukan!, available ${Object.keys(rank).join(", ")}`});
+    const result = addApiKey(apikey, author, expired, rank);
+    if (!result) return res.status(m.notKey(apikey).status).json(m.notKey(apikey));
+    res.json(m.res(`Berhasil menambahkan ApiKey ${apikey} dengan pemilik ${author} dan rank ${rank} akan expired pada ${expired}.`));
+});
 
 //  ISLAMIC
 

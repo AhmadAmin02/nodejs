@@ -11,10 +11,15 @@ const m = {
         author,
         result: "Mohon Maaf, Telah terjadi error pada server. silahkan laporkan error ke owner!"
     },
-    limit: {
+    limitm: {
         status: 429,
         author,
         result: "Terlalu banyak permintaan. kamu sudah mencapai 10 limit. silahkan coba lagi dalam 1 menit"
+    },
+    limitk: {
+        status: 429,
+        author,
+        result: "Kamu telah mencapai limit. upgrade akun kamu untuk limit yang lebih banyak!"
     },
     notKey: (key) => ({
         status: 401,
@@ -33,4 +38,14 @@ const m = {
     })
 }
 
-module.exports = m;
+const rank = {
+    basic: 100,
+    premium: 1000,
+    vip: 5000,
+    unlimited: false
+}
+
+//  PASSWORD UNTUK MENAMBAHKAN APIKEY
+const password = "AhmDev";
+
+module.exports = { m, rank, password }

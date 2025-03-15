@@ -2,6 +2,8 @@
     {
         "apikey": "ahmdev",
         "author": "AhmadAmin",
-        "expired": "20/12/25"
+        "expired": "-",
+        "rank": "unlimited",
+        "limit": false
     }
 ]
