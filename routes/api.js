@@ -33,7 +33,7 @@ router.get("/apikey/add", (req, res) => {
     if (!passwords || passwords !== password) return res.status(400).json({ error: "Password salah! Bukan owner AhmDev ngapain kesini?" });
     if (!apikey || !author || !expired || !ranks) return res.status(400).json({ error: "Parameter Apikey, Author, Expired, Ranks Harus diisi!" });
     if (!rank.hasOwnProperty(ranks)) return res.status(400).json({ error: `Rank ${ranks} tidak ditemukan!, available ${Object.keys(rank).join(", ")}`});
-    const result = addApiKey(apikey, author, expired, rank);
+    const result = addApiKey(apikey, author, expired, ranks);
     if (!result) return res.status(403).json({ error: "ApiKey sudah ada, silahkan cari nama baru Atau format parameter expired salah, Format: DD/MM/YY" });
     res.json(m.res(`Berhasil menambahkan ApiKey ${apikey} dengan pemilik ${author} dan rank ${rank} akan expired pada ${expired}.`));
 });
