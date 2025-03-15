@@ -16,8 +16,8 @@ router.get("/apikey/cek", ca, (req, res) => {
     const keys = req.query.apikey;
     const data = key.find(x => x.apikey === keys);
     if (!data || data === undefined) return res.status(m.notKey(keys).status).json(m.notKey(keys));
-    var date = new Date(data.expired);
-    var exp = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    var date = data.limit == false ? "-" : new Date(data.expired);
+    var exp = data.limit == false ? "Lifetime" : `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const result = {
         apikey: keys,
         pemilik: data.author,
@@ -34,7 +34,7 @@ router.get("/apikey/add", (req, res) => {
     if (!apikey || !author || !expired || !ranks) return res.status(400).json({ error: "Parameter Apikey, Author, Expired, Ranks Harus diisi!" });
     if (!rank.hasOwnProperty(ranks)) return res.status(400).json({ error: `Rank ${ranks} tidak ditemukan!, available ${Object.keys(rank).join(", ")}`});
     const result = addApiKey(apikey, author, expired, rank);
-    if (!result) return res.status(m.notKey(apikey).status).json(m.notKey(apikey));
+    if (!result) return res.status(403).json({ error: "ApiKey sudah ada, silahkan cari nama baru Atau format parameter expired salah, Format: DD/MM/YY" });
     res.json(m.res(`Berhasil menambahkan ApiKey ${apikey} dengan pemilik ${author} dan rank ${rank} akan expired pada ${expired}.`));
 });
 
