@@ -81,7 +81,7 @@ async function githubStalk(username = "ahmdev") {
 async function ffStalk(id = "") {
   let formdata = new FormData()
   formdata.append('uid', id)
-  let { data } = await axios.post('https://tools.freefireinfo.in/profileinfo.php?success=1', formdata, {
+  let { data } = await axios.post('https://freefireinfo.in/get-free-fire-account-information-via-uid/?success=1', formdata, {
     headers: {
       "content-type": "application/x-www-form-urlencoded",
       "origin": "https://tools.freefireinfo.in",
