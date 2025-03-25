@@ -28,6 +28,12 @@ router.get("/apikey/cek", ca, (req, res) => {
     res.json(m.res(result));
 });
 
+router.get("/apikey/list", (req, res) => {
+    const passwords = req.query.password;
+    if (passwords !== password) return res.status(400).json({ error: "Password salah!" });
+    res.json(m.res(key));
+})
+
 router.get("/apikey/add", (req, res) => {
     const { passwords, apikey, author, expired, ranks } = req.query;
     if (!passwords || passwords !== password) return res.status(400).json({ error: "Password salah! Bukan owner AhmDev ngapain kesini?" });
@@ -35,7 +41,7 @@ router.get("/apikey/add", (req, res) => {
     if (!rank.hasOwnProperty(ranks)) return res.status(400).json({ error: `Rank ${ranks} tidak ditemukan!, available ${Object.keys(rank).join(", ")}`});
     const result = addApiKey(apikey, author, expired, ranks);
     if (!result) return res.status(403).json({ error: "ApiKey sudah ada, silahkan cari nama baru Atau format parameter expired salah, Format: DD/MM/YY" });
-    res.json(m.res(`Berhasil menambahkan ApiKey ${apikey} dengan pemilik ${author} dan rank ${rank} akan expired pada ${expired}.`));
+    res.json(m.res(`Berhasil menambahkan ApiKey ${apikey} dengan pemilik ${author} dan rank ${ranks} akan expired pada ${expired}.`));
 });
 
 //  ISLAMIC
