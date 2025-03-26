@@ -48,7 +48,7 @@ router.get("/apikey/list", async (req, res) => {
     if (passwords !== password) return res.status(400).json({ error: "Password salah!" });
 
     try {
-        const [rows] = await db.execute("SELECT apikey, author, rank, expired, `limit` FROM apikey");
+        const [rows] = await db.execute("SELECT apikey, author, `rank`, expired, `limit` FROM apikey");
         const result = rows.map(data => ({
             apikey: data.apikey,
             pemilik: data.author,
