@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const fs = require("fs");
-const { isApiKey, ca, resp, addApiKey, key } = require("../lib/function");
+const { ca, resp, addApiKey } = require("../lib/function");
 const { m, rank, password } = require("../config");
 
 const ai = require("../scrape/ai");
@@ -12,35 +12,71 @@ const download = require("../scrape/download");
 
 //  APIKEY
 
-router.get("/apikey/cek", ca, (req, res) => {
+/**
+ * Endpoint untuk mengecek detail API key
+ */
+router.get("/apikey/cek", ca, async (req, res) => {
     const keys = req.query.apikey;
-    const data = key.find(x => x.apikey === keys);
-    if (!data || data === undefined) return res.status(m.notKey(keys).status).json(m.notKey(keys));
-    var date = data.limit == false ? "-" : new Date(data.expired);
-    var exp = data.limit == false ? "Lifetime" : `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    const result = {
-        apikey: keys,
-        pemilik: data.author,
-        rank: data.rank,
-        limit: data.limit === false ? "∞" : data.limit,
-        expiredAt: exp
+
+    try {
+        const [rows] = await db.execute("SELECT * FROM apikey WHERE apikey = ?", [keys]);
+        if (rows.length === 0) return res.status(m.notKey(keys).status).json(m.notKey(keys));
+
+        const data = rows[0];
+        const exp = data.limit === false ? "Lifetime" : new Date(data.expired).toLocaleDateString("id-ID");
+
+        const result = {
+            apikey: keys,
+            pemilik: data.author,
+            rank: data.rank,
+            limit: data.limit === false ? "∞" : data.limit,
+            expiredAt: exp
+        };
+
+        res.json(m.res(result));
+    } catch (err) {
+        console.error("Gagal mengambil data API key:", err);
+        res.status(m.err.status).json(m.err);
     }
-    res.json(m.res(result));
 });
 
-router.get("/apikey/list", (req, res) => {
+/**
+ * Endpoint untuk menampilkan semua API key (hanya owner)
+ */
+router.get("/apikey/list", async (req, res) => {
     const passwords = req.query.password;
     if (passwords !== password) return res.status(400).json({ error: "Password salah!" });
-    res.json(m.res(key));
-})
 
-router.get("/apikey/add", (req, res) => {
+    try {
+        const [rows] = await db.execute("SELECT apikey, author, rank, expired, `limit` FROM apikey");
+        const result = rows.map(data => ({
+            apikey: data.apikey,
+            pemilik: data.author,
+            rank: data.rank,
+            limit: data.limit === false ? "∞" : data.limit,
+            expiredAt: data.limit === false ? "Lifetime" : new Date(data.expired).toLocaleDateString("id-ID")
+        }));
+
+        res.json(m.res(result));
+    } catch (err) {
+        console.error("Gagal mengambil list API key:", err);
+        res.status(m.err.status).json(m.err);
+    }
+});
+
+/**
+ * Endpoint untuk menambahkan API key baru (hanya owner)
+ */
+router.get("/apikey/add", async (req, res) => {
     const { passwords, apikey, author, expired, ranks } = req.query;
-    if (!passwords || passwords !== password) return res.status(400).json({ error: "Password salah! Bukan owner AhmDev ngapain kesini?" });
+    
+    if (passwords !== password) return res.status(400).json({ error: "Password salah! Bukan owner AhmDev ngapain kesini?" });
     if (!apikey || !author || !expired || !ranks) return res.status(400).json({ error: "Parameter Apikey, Author, Expired, Ranks Harus diisi!" });
-    if (!rank.hasOwnProperty(ranks)) return res.status(400).json({ error: `Rank ${ranks} tidak ditemukan!, available ${Object.keys(rank).join(", ")}`});
-    const result = addApiKey(apikey, author, expired, ranks);
-    if (!result) return res.status(403).json({ error: "ApiKey sudah ada, silahkan cari nama baru Atau format parameter expired salah, Format: DD/MM/YY" });
+    if (!rank.hasOwnProperty(ranks)) return res.status(400).json({ error: `Rank ${ranks} tidak ditemukan!, available ${Object.keys(rank).join(", ")}` });
+
+    const success = await addApiKey(apikey, author, expired, ranks);
+    if (!success) return res.status(403).json({ error: "ApiKey sudah ada, atau format parameter expired salah! Format: DD/MM/YYYY" });
+
     res.json(m.res(`Berhasil menambahkan ApiKey ${apikey} dengan pemilik ${author} dan rank ${ranks} akan expired pada ${expired}.`));
 });
 

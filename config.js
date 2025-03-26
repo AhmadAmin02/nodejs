@@ -39,7 +39,8 @@ const m = {
 }
 
 const rank = {
-    basic: 100,
+    free: 100,
+    basic: 500,
     premium: 1000,
     vip: 5000,
     unlimited: false
