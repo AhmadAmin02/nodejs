@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const fs = require("fs");
+const db = require("../lib/db");
 const { ca, resp, addApiKey } = require("../lib/function");
 const { m, rank, password } = require("../config");
 
